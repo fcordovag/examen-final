@@ -3,7 +3,7 @@
 <?php
 $title = 'Login-TIENDITA';
 include('includes/head.php'); ?>
-<body style="background-color: #666666;">
+<body  style="background-color: #fff;">
 	
 <div class="limiter">
     <div class="container-login100">
