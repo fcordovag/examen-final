@@ -21,3 +21,7 @@ Se agrega estructura de base de datos ne carpeta DB, cuenta con datos de prueba
     Pagina exclusiva para comprar zapillas 
 
     debes tener un usuario o registrarte para poder obtener el listado de nuestros productos.
+![image](https://user-images.githubusercontent.com/22396260/193441593-b954c83a-191c-44b8-bde1-a1d9ef601e7f.png)
+![image](https://user-images.githubusercontent.com/22396260/193441617-51d7b9f1-275f-463c-a106-38b99301edf4.png)
+![image](https://user-images.githubusercontent.com/22396260/193441632-ba0e35bf-5427-4bac-949e-4e2d44c6be21.png)
+![image](https://user-images.githubusercontent.com/22396260/193441641-d62fd65d-0751-4b6d-808c-2c128de5601b.png)
