@@ -25,3 +25,5 @@ Se agrega estructura de base de datos ne carpeta DB, cuenta con datos de prueba
 ![image](https://user-images.githubusercontent.com/22396260/193441617-51d7b9f1-275f-463c-a106-38b99301edf4.png)
 ![image](https://user-images.githubusercontent.com/22396260/193441632-ba0e35bf-5427-4bac-949e-4e2d44c6be21.png)
 ![image](https://user-images.githubusercontent.com/22396260/193441641-d62fd65d-0751-4b6d-808c-2c128de5601b.png)
+
+    Para revisar el codigo ir a la branch staging u dev (dev podria tener feature aun no terminadas, siempre revisar staging)
