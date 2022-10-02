@@ -18,3 +18,6 @@ saludos cordiales.
 EFE WEB
 Se agrega estructura de base de datos ne carpeta DB, cuenta con datos de prueba
 
+    Pagina exclusiva para comprar zapillas 
+
+    debes tener un usuario o registrarte para poder obtener el listado de nuestros productos.
