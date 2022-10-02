@@ -16,3 +16,5 @@ saludos cordiales.
 
 
 EFE WEB
+Se agrega estructura de base de datos ne carpeta DB, cuenta con datos de prueba
+
