@@ -1,14 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <?php
 $title = 'Login-TIENDITA';
 $user = 'cordova2312@gmail.com';
-include('../includes/head.php'); ?>
+include('../includes/head.php'); 
+require_once('../api/crud/products_user.php');
+?>
 <body>
-	
 <?php include('nav.php'); ?>
-
 <div class="container">
   <h1 class="mt-4 text-center">Mis compras</h1>
   <div class="col-lg-12 col-md-12" data-aos="fade-up" data-aos-delay="100">
@@ -23,19 +22,14 @@ include('../includes/head.php'); ?>
                 </tr>
             </thead>
             <tbody>
+                <?php foreach ($products as $key => $product) { ?>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
+                    <td scope="row"><?php echo $product->id; ?></td> 
+                    <td scope="row"><?php echo $product->name; ?></td> 
+                    <td scope="row"><?php echo $product->created_at; ?></td> 
+                    <td scope="row">$ <?php echo number_format($product->price); ?></td> 
+                    <td class="text-center"><i class="bi bi-file-earmark-pdf" style="font-size:24px"></i></td>
+                <?php } ?>
                 </tr>
             </tbody>
         </table>

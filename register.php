@@ -9,7 +9,7 @@ include('includes/head.php');  ?>
 		<div class="container-login100">
 			<div class="wrap-login100">
                 
-				<div class="login100-more" style="background-image: url('assets/images/bg-01.jpg');">
+				<div class="login100-more" style="background-image: url('assets/images/original.avif');">
 				</div>
 				<form class="login100-form validate-form" id="myForm" name="myForm" onsubmit="event.preventDefault(); validateMyForm();">
 					<span class="login100-form-title p-b-23">
