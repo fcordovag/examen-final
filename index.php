@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+session_start();
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: store/");
+    exit;
+}
 $title = 'Login-TIENDITA';
 include('includes/head.php'); ?>
 <body  style="background-color: #fff;">
-	
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form class="login100-form validate-form" onsubmit="event.preventDefault(); processForm();">
+            <form class="login100-form validate-form" id="myFormLogin" name="myFormLogin" onsubmit="event.preventDefault(); processLogin();">
                 <span class="login100-form-title p-b-43">
                     Login to continue
                 </span>
                 
                 
                 <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                    <input class="input100" type="text" name="email">
+                    <input class="input100" type="text" name="email" id="email" value="email@email.com">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Email</span>
                 </div>
                 
                 
                 <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <input class="input100" type="password" name="pass">
+                    <input class="input100" type="password" name="pass" id="pass" value="123456">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Password</span>
                 </div>
@@ -44,7 +48,7 @@ include('includes/head.php'); ?>
         
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
+                    <button class="login100-form-btn" type="submit">
                         Login
                     </button>
                 </div>
@@ -71,18 +75,41 @@ include('includes/head.php'); ?>
         </div>
     </div>
 </div>
-	
-	
 
-	
-	
 <?php include('includes/footer.php'); ?>
 <script>
-    function processForm()
-    {
-        console.log('holaaa')
-        window.location.href = "store/index.php";
-    }
+	function processLogin()
+	{
+        console.log('INICIAMOS')
+		var email = document.getElementById("email").value;
+		var form = $("#myFormLogin");
+		console.log(form)
+		if(email!=""){
+			$(':input[type="submit"]').prop('disabled', true);
+			$.ajax({
+				type  : 'POST',
+				url   : './api/crud/login.php',
+				data  : form.serialize(),
+				beforeSend: function(){
+					
+				},
+				success :  function(result){
+                    console.log(result)
+					if(result == 'OK'){
+						swal("Bien hecho!", "Te estamos redirigendo a la tienda !", "success");
+						setTimeout(
+							function() {
+								window.location.href = 'store/';
+							}, 4000);
+					}
+					if(result != 'OK'){
+						swal("Error !", "Revisa tu usuario y contraseña, o ve al nuestro formulario de registro !", "error");
+						$(':input[type="submit"]').prop('disabled', false);
+					}
+				}
+			});
+		}
+	}
 </script>
 </body>
 </html>

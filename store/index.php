@@ -1,4 +1,12 @@
-
+<?php
+session_start();
+if(!isset($_SESSION["loggedin"]) && !$_SESSION["loggedin"] === true){
+    header("location: index.php");
+    exit;
+}
+require_once('../api/crud/products.php');
+//print_r($products);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -7,59 +15,70 @@ $user = 'cordova2312@gmail.com';
 include('../includes/head.php'); ?>
 <body>
 	
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <img src="../assets/images/bg-01.jpg" alt="..." height="36">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-        </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="#">Productos</a>
-        </li> -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <?php echo $user; ?>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Mis compras</a></li>
-                <li><a class="dropdown-item" href="#">Mis datos</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Salir</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<?php include('nav.php'); ?>
+
 <div class="container">
-  <h1 class="mt-4">Agregar Destinos</h1>
-  <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-    <div class="card">
-        <div class="card-img">
-        <img src="../assets/images/products/destinos.jpg" alt="" class="img-fluid">
-        </div>
-        <h3><a href="europa.html" class="stretched-link">Europa</a></h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos at porro natus impedit? Quisquam placeat eaque, maiores quia magnam exercitationem quaerat harum culpa nulla accusamus molestiae? Eligendi fuga deserunt dolores?</p>
+  <h1 class="mt-12">Lista de productos</h1>
+    <div class="row">
+    <?php foreach ($products as $key => $product) { ?>
+        <div class="col-lg-4 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100" style="padding-bottom: 1em;">
+            <div class="card">
+                <div class="card-img">
+                    <img src="../assets/images/products/<?php echo $product->image;?>" alt="<?php echo $product->name; ?>" class="img-fluid">
+                </div>
+                <h3 class="text-center"><?php echo $product->name; ?></h3>
+                <h5 class="text-center">Precio <?php echo number_format($product->price); ?></h5>
+                <h5 class="text-center" style="font-size:14px;color:green">Stock <?php echo $product->stock; ?></h5>
+                <p style="font-size:11px;padding: 1em;"><?php echo $product->description; ?></p>
+                <button type="submit" class="btn btn-outline-success" onclick="functionToExecute('<?php echo $product->id; ?>','<?php echo $product->name; ?>','<?php echo $product->price; ?>')">COMPRAR</button>
+            </div>
+        </div><!-- End Card Item -->
+    <?php } ?>
     </div>
-    </div><!-- End Card Item -->
 </div>
-	
-	
 <?php include('../includes/footer.php'); ?>
 <script>
-    function processForm()
+    function functionToExecute(id, product, price)
     {
-        console.log('holaaa')
-        window.location.href = "store/index.php";
+        swal({
+            title: "Compra ",
+            text: "Estas comprando las "+product+" por un valor de "+price,
+            icon: "success",
+            buttons: true,
+            successMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                swal("Agregamos el producto a tu lista de compras", {
+                    icon: "success",
+                });
+                $.ajax({
+				type  : 'POST',
+				url   : '../api/crud/compra.php',
+				data  : {'id':id},
+				beforeSend: function(){
+					
+				},
+				success :  function(result){
+                    console.log(result)
+					if(result == 'OK'){
+						swal("Bien hecho!", "Te estamos redirigendo a la tienda !", "success");
+						setTimeout(
+							function() {
+								window.location.href = 'compras.php';
+							}, 4000);
+					}
+					if(result != 'OK'){
+						swal("Error !", "Revisa tu usuario y contraseña, o ve al nuestro formulario de registro !", "error");
+						$(':input[type="submit"]').prop('disabled', false);
+					}
+				}
+			});
+                    
+            } else {
+                swal("¡ Que lamentable que te arrepientas de esta compra !");
+            }
+        });
     }
 </script>
 </body>
